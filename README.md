@@ -42,6 +42,13 @@ oc get templates
 
 oc new-app --template dotnet-authentication-example
 
+-- POD-Problem: Livenes und Readiness probe gehen direkt auf / -> dort bekommen sie natürlich Unauthorized!!
+https://developers.redhat.com/blog/2018/12/21/asp_dotnet_core_kubernetes_health_check_openshift/
+--> Wir müssen also Readiness und Liveness in die Applikation mit einbauen 
+--> Passiert über eigenes Service und UseHealthChecks in Startup.cs
+--> im dotnet-authentication-example.json werden diese Checks eingetragen
+
+
 
 
 -- TODO: Advanced Example: https://jasonwatmore.com/post/2020/07/06/aspnet-core-3-boilerplate-api-with-email-sign-up-verification-authentication-forgot-password

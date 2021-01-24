@@ -9,6 +9,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System;
 
 namespace WebApi
@@ -60,6 +61,12 @@ namespace WebApi
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+
+            // Add HealthChecks for Kubernetes / Openshift
+            services.AddSingleton<HealthStatusData>();
+            services.AddHealthChecks()
+                    .AddCheck<LivenessHealthCheck>("Liveness", failureStatus: null)
+                    .AddCheck<ReadinessHealthCheck>("Readiness", failureStatus: null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +88,17 @@ namespace WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseHealthChecks("/health/live", new HealthCheckOptions()
+            {
+                Predicate = check => check.Name == "Liveness"
+            });
+
+            app.UseHealthChecks("/health/ready", new HealthCheckOptions()
+            {
+                Predicate = check => check.Name == "Readiness",
+
+            });
 
             app.UseEndpoints(x => x.MapControllers());
         }
