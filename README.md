@@ -49,6 +49,14 @@ https://developers.redhat.com/blog/2018/12/21/asp_dotnet_core_kubernetes_health_
 --> im dotnet-authentication-example.json werden diese Checks eingetragen
 
 
+-- Openshift CLI installieren (MAC): von der webConsole (Sandbox) -> Fragezeichen Command Line Tools -> Download
+-> abgelegt unter /Users/sonneck/Documents/git_repos/rhel_linuxContainers/oc_sandbox
+-> Einloggen in Sandbox -> User -> Copy Link -> Auf Sandbox klicken -> Open Token -> dann bekommt man Token + Command z.B.
+./oc login --token=sha256~FwnyPWH6e-LsuE-p39oo9N5H76IQYEVW4yBuOuS2vLE --server=https://api.sandbox.x8i5.p1.openshiftapps.com:6443
+find . | grep openshiftio | grep dotnet | xargs -n 1 /Users/sonneck/Documents/git_repos/rhel_linuxContainers/oc_sandbox/oc apply -f 
+/Users/sonneck/Documents/git_repos/rhel_linuxContainers/oc_sandbox/oc get templates
+/Users/sonneck/Documents/git_repos/rhel_linuxContainers/oc_sandbox/oc new-app --template dotnet-authentication-example
+
 -- TODO: Gitbhub WebHook einrichten für CI/CD
 https://developer.ibm.com/technologies/containers/tutorials/github-webhook-triggers-openshift/
 - Webhook-URL: BuildConfig raussuchen und dann folgendes absetzen
@@ -59,6 +67,7 @@ https://api.crc.testing:6443/apis/build.openshift.io/v1/namespaces/authenticatio
 eq1qVdx0C2pfkF4kRP1osU7eu0g8rGSkeus8FbrR
 - Im GibHub-Repo -> Settings -> Webhooks -> 'Add webhook'
 - Bei PayLoad URL die URL von oben
+https://api.crc.testing:6443/apis/build.openshift.io/v1/namespaces/authentication/buildconfigs/dotnet-authentication-example-build/webhooks/eq1qVdx0C2pfkF4kRP1osU7eu0g8rGSkeus8FbrR/github
 - Type: application/json
 - Secret: von oben
 
