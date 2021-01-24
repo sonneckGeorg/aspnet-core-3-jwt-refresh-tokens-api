@@ -74,7 +74,7 @@ namespace WebApi
 
             // global cors policy
             app.UseCors(x => x
-                .SetIsOriginAllowed(origin => true)
+                .SetIsOriginAllowed(origin => true) // .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
