@@ -49,6 +49,20 @@ https://developers.redhat.com/blog/2018/12/21/asp_dotnet_core_kubernetes_health_
 --> im dotnet-authentication-example.json werden diese Checks eingetragen
 
 
+-- TODO: Gitbhub WebHook einrichten für CI/CD
+https://developer.ibm.com/technologies/containers/tutorials/github-webhook-triggers-openshift/
+- Webhook-URL: BuildConfig raussuchen und dann folgendes absetzen
+oc describe bc/dotnet-authentication-example-build
+-> liefert Webhook GibHub-URL:
+https://api.crc.testing:6443/apis/build.openshift.io/v1/namespaces/authentication/buildconfigs/dotnet-authentication-example-build/webhooks/<secret>/github
+- Bei der BuildConfig im YAML findet man das Github Secret:
+eq1qVdx0C2pfkF4kRP1osU7eu0g8rGSkeus8FbrR
+- Im GibHub-Repo -> Settings -> Webhooks -> 'Add webhook'
+- Bei PayLoad URL die URL von oben
+- Type: application/json
+- Secret: von oben
+
+
 
 
 -- TODO: Advanced Example: https://jasonwatmore.com/post/2020/07/06/aspnet-core-3-boilerplate-api-with-email-sign-up-verification-authentication-forgot-password
