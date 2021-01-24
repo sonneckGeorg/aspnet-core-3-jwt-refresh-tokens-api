@@ -75,7 +75,7 @@ namespace WebApi
             // add hardcoded test user to db on startup
             // plain text password is used for simplicity, hashed passwords should be used in production applications
             context.Users.Add(new User { FirstName = "Test", LastName = "User", Username = "test", Password = "test" });
-            context.Users.Add(new User { FirstName = "Test2", LastName = "User2", Username = "test2", Password = "test2" });
+            context.Users.Add(new User { FirstName = "Test23", LastName = "User2", Username = "test2", Password = "test2" });
             context.SaveChanges();
 
             app.UseRouting();
